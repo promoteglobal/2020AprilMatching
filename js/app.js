@@ -27,7 +27,7 @@ function shuffle(array) {
     return array;
 }
 
-reset.addEventListener('click', function mix (event) {
+function mix () {
   document.querySelector('.moves').innerHTML = 0;
   console.log('You clicked the reset button.');
   const listItems = cardBoard.getElementsByTagName('li');
@@ -37,7 +37,9 @@ reset.addEventListener('click', function mix (event) {
     for(let i = 0; i < 16; i++){
       cardBoard.appendChild(shuffledArr[i]);
     }
-});
+}
+
+reset.addEventListener('click', mix);
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
