@@ -37,6 +37,15 @@ function mix () {
     for(let i = 0; i < 16; i++){
       cardBoard.appendChild(shuffledArr[i]);
     }
+   let clearmatch = document.querySelectorAll(".card.match");
+   for (var i = 0; i < clearmatch.length; i++) {
+    clearmatch[i].classList.toggle("match");
+  }
+    let clearNonMatch = document.querySelectorAll(".card.open.show");
+    for (var i = 0; i < clearNonMatch.length; i++) {
+      clearNonMatch[i].classList.toggle("open");
+      clearNonMatch[i].classList.toggle("show");
+  }
 }
 
 reset.addEventListener('click', mix);
