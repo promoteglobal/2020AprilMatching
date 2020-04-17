@@ -46,6 +46,14 @@ function mix () {
       clearNonMatch[i].classList.toggle("open");
       clearNonMatch[i].classList.toggle("show");
   }
+  document.querySelector(".timer").innerHTML = 0;
+  let starsList = document.querySelector(".stars");
+  starsList.innerHTML = '';
+  for (let i = 0; i < 5; i++){
+    const li = document.createElement('li');
+    li.innerHTML = '<i class="fa fa-star"></i>';
+    starsList.appendChild(li);
+   }
 }
 
 reset.addEventListener('click', mix);
@@ -115,6 +123,7 @@ let card1El = cardBoard.addEventListener('click', function frstCrdEl (event) {
   }
 });
 
+let matchCount = 0;
 
 cardBoard.addEventListener('click', function matched (event) {
   if (event.target.classList.contains("card")){
@@ -129,6 +138,29 @@ cardBoard.addEventListener('click', function matched (event) {
     card1El.classList.toggle("open");
     card1El.classList.toggle("show");
     card1El.classList.toggle("match");
+    matchCount += 1;
+    if (matchCount === 8) {
+      if (counter >= 55) {
+        alert("Hmm, were you even trying?");
+        document.querySelector(".timer").innerHTML = 0;
+      }
+      else if (counter >= 50) {
+        alert("Oh no, you should concentrate better next time.");
+        document.querySelector(".timer").innerHTML = 0;
+      }
+      else if (counter >= 45) {
+        alert("Not bad, but actively try and remember what you saw.");
+        document.querySelector(".timer").innerHTML = 0;
+      }
+      else if (counter >= 26) {
+        alert("Almost Perfect Score. Concentrate better next time!");
+        document.querySelector(".timer").innerHTML = 0;
+      }
+      else if (counter <= 25) {
+        alert("Perfect Score!");
+        document.querySelector(".timer").innerHTML = 0;
+      }
+    }
     } else { //need a time function
       setTimeout(function delayWrongAnswer() {
         console.log("Cards don't Match!");
@@ -166,8 +198,31 @@ cardBoard.addEventListener('click', function counter (event) {
   let movesEl = document.querySelector('.moves').innerHTML;
   let movesNum = parseInt(movesEl,10) +1;
   document.querySelector('.moves').innerHTML = movesNum;
+  const starGroup = document.querySelector('.stars');
+  if (movesNum === 25) {
+    starGroup.firstElementChild.remove();
+  }
+  if (movesNum === 35) {
+    starGroup.firstElementChild.remove();
+  }
+  if (movesNum === 45) {
+    starGroup.firstElementChild.remove();
+  }
+  if (movesNum === 50) {
+    starGroup.firstElementChild.remove();
+  }
+  if (movesNum === 55) {
+    starGroup.firstElementChild.remove();
+  }
 }});
 
+
+setInterval(myTimer ,1000);
+function myTimer() {
+  let timer = Number(document.querySelector(".timer").innerHTML);
+  timer += 1;
+  document.querySelector(".timer").innerHTML = timer;
+}
 
 // const myName = 'Andrew';
 
@@ -184,7 +239,7 @@ cardBoard.addEventListener('click', function counter (event) {
 // introduceMyself();
 
 
-//match function
+
 //star function
 //you win function
 //timer function
@@ -195,3 +250,6 @@ cardBoard.addEventListener('click', function counter (event) {
 //reset function
   //mix function
   //counting function
+  //match function
+
+  document.addEventListener("load", mix);
