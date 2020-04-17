@@ -27,6 +27,8 @@ function shuffle(array) {
     return array;
 }
 
+let matchCount = 0; 
+
 function mix () {
   document.querySelector('.moves').innerHTML = 0;
   console.log('You clicked the reset button.');
@@ -54,6 +56,7 @@ function mix () {
     li.innerHTML = '<i class="fa fa-star"></i>';
     starsList.appendChild(li);
    }
+   matchCount = 0;
 }
 
 reset.addEventListener('click', mix);
@@ -123,7 +126,7 @@ let card1El = cardBoard.addEventListener('click', function frstCrdEl (event) {
   }
 });
 
-let matchCount = 0;
+
 
 cardBoard.addEventListener('click', function matched (event) {
   if (event.target.classList.contains("card")){
@@ -140,25 +143,31 @@ cardBoard.addEventListener('click', function matched (event) {
     card1El.classList.toggle("match");
     matchCount += 1;
     if (matchCount === 8) {
+      debugger;
       if (counter >= 55) {
         alert("Hmm, were you even trying?");
         document.querySelector(".timer").innerHTML = 0;
+        matchCount = 0;
       }
       else if (counter >= 50) {
         alert("Oh no, you should concentrate better next time.");
         document.querySelector(".timer").innerHTML = 0;
+        matchCount = 0;
       }
       else if (counter >= 45) {
         alert("Not bad, but actively try and remember what you saw.");
         document.querySelector(".timer").innerHTML = 0;
+        matchCount = 0;
       }
       else if (counter >= 26) {
         alert("Almost Perfect Score. Concentrate better next time!");
         document.querySelector(".timer").innerHTML = 0;
+        matchCount = 0;
       }
       else if (counter <= 25) {
         alert("Perfect Score!");
         document.querySelector(".timer").innerHTML = 0;
+        matchCount = 0;
       }
     }
     } else { //need a time function
