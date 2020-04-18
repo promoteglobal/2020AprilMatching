@@ -22,7 +22,6 @@ function shuffle(array) {
 let matchCount = 0; 
 
 function mix () {
-  debugger;
   document.querySelector('.moves').innerHTML = 0;
   console.log('You clicked the reset button.');
   const listItems = cardBoard.getElementsByTagName('li');
@@ -53,29 +52,8 @@ function mix () {
 }
 
 reset.addEventListener('click', mix);
-/*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
 
 
-cardBoard.addEventListener('click', function flip (event) {
-  if (event.target.classList.contains("fa")){
-  // console.log('The icon was clicked!');
-  event.target.parentElement.classList.toggle("open");
-  event.target.parentElement.classList.toggle("show");
-} else if (event.target.classList.contains("card")){
-  // console.log('The card was clicked!');
-  event.target.classList.toggle("open");
-  event.target.classList.toggle("show");
-}
-});
 
 let card1 = cardBoard.addEventListener('click', function frstCrd (event) {
   if (event.target.classList.contains("card")){
@@ -107,9 +85,7 @@ let card1El = cardBoard.addEventListener('click', function frstCrdEl (event) {
   }
 });
 
-
-
-cardBoard.addEventListener('click', function matched (event) {
+function matched (event) {
   if (event.target.classList.contains("card")){
   let counter = document.querySelector('.moves').innerHTML;
   if (counter % 2 !== 0){
@@ -125,29 +101,28 @@ cardBoard.addEventListener('click', function matched (event) {
     matchCount += 1;
     if (matchCount === 8) {
       let time = document.querySelector(".timer").innerHTML;
-      debugger;
       if (counter >= 57) {
-        alert("Hmm, were you even trying? You only kept 1 star and your time was " + time + "!");
+        alert("Hmm, were you even trying? You only kept 1 star and your time was " + time + " seconds!");
         document.querySelector(".timer").innerHTML = 0;
         matchCount = 0;
       }
       else if (counter >= 47) {
-        alert("Oh no, you should concentrate better next time. You only kept 2 stars and your time was " + time + "!");
+        alert("Oh no, you should concentrate better next time. You only kept 2 stars and your time was " + time + " seconds!");
         document.querySelector(".timer").innerHTML = 0;
         matchCount = 0;
       }
       else if (counter >= 37) {
-        alert("Not bad, for keeping 3 stars but actively try and remember what you saw. Your time was " + time + "!");
+        alert("Not bad, for keeping 3 stars but actively try and remember what you saw. Your time was " + time + " seconds!");
         document.querySelector(".timer").innerHTML = 0;
         matchCount = 0;
       }
       else if (counter >= 27) {
-        alert("Almost Perfect Score while keeping 4 stars. Concentrate better next time! Your time was " + time + "!");
+        alert("Almost Perfect Score while keeping 4 stars. Concentrate better next time! Your time was " + time + " seconds!");
         document.querySelector(".timer").innerHTML = 0;
         matchCount = 0;
       }
       else if (counter <= 26) {
-        alert("Perfect Score! You kept all 5 stars and your time was " + time + "!");
+        alert("Perfect Score! You kept all 5 stars and your time was " + time + " seconds!");
         document.querySelector(".timer").innerHTML = 0;
         matchCount = 0;
       }
@@ -164,10 +139,22 @@ cardBoard.addEventListener('click', function matched (event) {
   }
  
   }
-});
+}
 
 
-cardBoard.addEventListener('click', function counter (event) {
+function flip (event) {
+  if (event.target.classList.contains("fa")){
+  // console.log('The icon was clicked!');
+  event.target.parentElement.classList.toggle("open");
+  event.target.parentElement.classList.toggle("show");
+} else if (event.target.classList.contains("card")){
+  // console.log('The card was clicked!');
+  event.target.classList.toggle("open");
+  event.target.classList.toggle("show");
+}
+}
+
+function counter (event) {
   if (event.target.classList.contains("fa") || event.target.classList.contains("card")){
   // console.log('The icon or card was clicked!');
   let movesEl = document.querySelector('.moves').innerHTML;
@@ -186,22 +173,32 @@ cardBoard.addEventListener('click', function counter (event) {
   if (movesNum === 57) {
     starGroup.firstElementChild.remove();
   }
-}});
+}}
 
 
+function masterFunction (evt) {
+  matched(evt);
+  counter(evt);
+  flip(evt);
+}
 
+cardBoard.addEventListener('click', masterFunction);
+
+
+//------Preconfig upon loading-----------------------------
 //mixes board upon starting
 window.addEventListener("load", mix);
 
-//makes timer continuously go
 
-  
-setInterval(myTimer ,1000);
+//-----------------independent timer---------------------------
+//makes timer continuously go
 function myTimer() {
   let timer = Number(document.querySelector(".timer").innerHTML);
   timer += 1;
   document.querySelector(".timer").innerHTML = timer;
 }
+setInterval(myTimer ,1000);
+
 
 
 
@@ -219,3 +216,20 @@ function myTimer() {
 // }
 
 // introduceMyself();
+
+// cardBoard.addEventListener('click', flip);
+// cardBoard.addEventListener('click', counter);
+// cardBoard.addEventListener('click', matched);
+
+
+
+/*
+ * set up the event listener for a card. If a card is clicked:
+ *  - display the card's symbol (put this functionality in another function that you call from this one)
+ *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
+ *  - if the list already has another card, check to see if the two cards match
+ *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
+ *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
+ *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
+ *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
+ */
