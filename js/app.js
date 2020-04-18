@@ -22,6 +22,7 @@ function shuffle(array) {
 let matchCount = 0; 
 
 function mix () {
+  debugger;
   document.querySelector('.moves').innerHTML = 0;
   console.log('You clicked the reset button.');
   const listItems = cardBoard.getElementsByTagName('li');
@@ -123,29 +124,30 @@ cardBoard.addEventListener('click', function matched (event) {
     card1El.classList.toggle("match");
     matchCount += 1;
     if (matchCount === 8) {
+      let time = document.querySelector(".timer").innerHTML;
       debugger;
       if (counter >= 57) {
-        alert("Hmm, were you even trying? You only kept 1 star!");
+        alert("Hmm, were you even trying? You only kept 1 star and your time was " + time + "!");
         document.querySelector(".timer").innerHTML = 0;
         matchCount = 0;
       }
       else if (counter >= 47) {
-        alert("Oh no, you should concentrate better next time. You only kept 2 stars.");
+        alert("Oh no, you should concentrate better next time. You only kept 2 stars and your time was " + time + "!");
         document.querySelector(".timer").innerHTML = 0;
         matchCount = 0;
       }
       else if (counter >= 37) {
-        alert("Not bad, for keeping 3 stars but actively try and remember what you saw.");
+        alert("Not bad, for keeping 3 stars but actively try and remember what you saw. Your time was " + time + "!");
         document.querySelector(".timer").innerHTML = 0;
         matchCount = 0;
       }
       else if (counter >= 27) {
-        alert("Almost Perfect Score while keeping 4 stars. Concentrate better next time!");
+        alert("Almost Perfect Score while keeping 4 stars. Concentrate better next time! Your time was " + time + "!");
         document.querySelector(".timer").innerHTML = 0;
         matchCount = 0;
       }
       else if (counter <= 26) {
-        alert("Perfect Score! You kept all 5 stars!");
+        alert("Perfect Score! You kept all 5 stars and your time was " + time + "!");
         document.querySelector(".timer").innerHTML = 0;
         matchCount = 0;
       }
@@ -189,16 +191,17 @@ cardBoard.addEventListener('click', function counter (event) {
 
 
 //mixes board upon starting
-document.addEventListener("load", mix);
+window.addEventListener("load", mix);
 
 //makes timer continuously go
+
+  
+setInterval(myTimer ,1000);
 function myTimer() {
   let timer = Number(document.querySelector(".timer").innerHTML);
   timer += 1;
   document.querySelector(".timer").innerHTML = timer;
 }
-  
-setInterval(myTimer ,1000);
 
 
 
