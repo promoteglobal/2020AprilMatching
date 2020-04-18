@@ -1,8 +1,23 @@
 
+//------------------------------------global variables for event listeners-------------------------------
+
 const cardBoard = document.querySelector('.deck'); 
 
 const reset = document.querySelector('.restart');
 
+//-----------------independent timer---------------------------
+//makes timer continuously go
+
+let constTimer = setInterval(myTimer ,1000);
+
+function myTimer() {
+  let timer = Number(document.querySelector(".timer").innerHTML);
+  timer += 1;
+  document.querySelector(".timer").innerHTML = timer;
+}
+
+
+//-------------------------------------reset board by clicking the reset button---------------------------------
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -23,9 +38,8 @@ let matchCount = 0;
 
 function mix () {
   document.querySelector('.moves').innerHTML = 0;
-  console.log('You clicked the reset button.');
   const listItems = cardBoard.getElementsByTagName('li');
-  var arr = Array.prototype.slice.call(listItems)
+  var arr = Array.prototype.slice.call(listItems);
   let shuffledArr = shuffle(arr);
   cardBoard.innerHTML = '';
     for(let i = 0; i < 16; i++){
@@ -41,6 +55,9 @@ function mix () {
       clearNonMatch[i].classList.toggle("show");
   }
   document.querySelector(".timer").innerHTML = 0;
+  if (constTimer === false) {
+    constTimer = setInterval(myTimer ,1000);
+  }
   let starsList = document.querySelector(".stars");
   starsList.innerHTML = '';
   for (let i = 0; i < 5; i++){
@@ -49,11 +66,12 @@ function mix () {
     starsList.appendChild(li);
    }
    matchCount = 0;
+  
 }
 
 reset.addEventListener('click', mix);
 
-
+//---------------------------------variables for gathing data of what cards were clicked-------------------------
 
 let card1 = cardBoard.addEventListener('click', function frstCrd (event) {
   if (event.target.classList.contains("card")){
@@ -85,6 +103,8 @@ let card1El = cardBoard.addEventListener('click', function frstCrdEl (event) {
   }
 });
 
+//---------------Functions for all board clicks-------------------------
+
 function matched (event) {
   if (event.target.classList.contains("card")){
   let counter = document.querySelector('.moves').innerHTML;
@@ -100,31 +120,42 @@ function matched (event) {
     card1El.classList.toggle("match");
     matchCount += 1;
     if (matchCount === 8) {
+      debugger;
       let time = document.querySelector(".timer").innerHTML;
       if (counter >= 57) {
         alert("Hmm, were you even trying? You only kept 1 star and your time was " + time + " seconds!");
         document.querySelector(".timer").innerHTML = 0;
         matchCount = 0;
+        clearInterval(constTimer);
+        constTimer = false;
       }
       else if (counter >= 47) {
         alert("Oh no, you should concentrate better next time. You only kept 2 stars and your time was " + time + " seconds!");
         document.querySelector(".timer").innerHTML = 0;
         matchCount = 0;
+        clearInterval(constTimer);
+        constTimer = false;
       }
       else if (counter >= 37) {
         alert("Not bad, for keeping 3 stars but actively try and remember what you saw. Your time was " + time + " seconds!");
         document.querySelector(".timer").innerHTML = 0;
         matchCount = 0;
+        clearInterval(constTimer);
+        constTimer = false;
       }
       else if (counter >= 27) {
         alert("Almost Perfect Score while keeping 4 stars. Concentrate better next time! Your time was " + time + " seconds!");
         document.querySelector(".timer").innerHTML = 0;
         matchCount = 0;
+        clearInterval(constTimer);
+        constTimer = false;
       }
       else if (counter <= 26) {
         alert("Perfect Score! You kept all 5 stars and your time was " + time + " seconds!");
         document.querySelector(".timer").innerHTML = 0;
         matchCount = 0;
+        clearInterval(constTimer);
+        constTimer = false;
       }
     }
     } else { //need a time function
@@ -139,19 +170,6 @@ function matched (event) {
   }
  
   }
-}
-
-
-function flip (event) {
-  if (event.target.classList.contains("fa")){
-  // console.log('The icon was clicked!');
-  event.target.parentElement.classList.toggle("open");
-  event.target.parentElement.classList.toggle("show");
-} else if (event.target.classList.contains("card")){
-  // console.log('The card was clicked!');
-  event.target.classList.toggle("open");
-  event.target.classList.toggle("show");
-}
 }
 
 function counter (event) {
@@ -176,6 +194,19 @@ function counter (event) {
 }}
 
 
+function flip (event) {
+  if (event.target.classList.contains("fa")){
+  // console.log('The icon was clicked!');
+  event.target.parentElement.classList.toggle("open");
+  event.target.parentElement.classList.toggle("show");
+} else if (event.target.classList.contains("card")){
+  // console.log('The card was clicked!');
+  event.target.classList.toggle("open");
+  event.target.classList.toggle("show");
+}
+}
+
+
 function masterFunction (evt) {
   matched(evt);
   counter(evt);
@@ -185,19 +216,11 @@ function masterFunction (evt) {
 cardBoard.addEventListener('click', masterFunction);
 
 
-//------Preconfig upon loading-----------------------------
+//------Preconfig board upon loading-----------------------------
 //mixes board upon starting
 window.addEventListener("load", mix);
 
 
-//-----------------independent timer---------------------------
-//makes timer continuously go
-function myTimer() {
-  let timer = Number(document.querySelector(".timer").innerHTML);
-  timer += 1;
-  document.querySelector(".timer").innerHTML = timer;
-}
-setInterval(myTimer ,1000);
 
 
 
