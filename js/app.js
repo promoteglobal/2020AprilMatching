@@ -37,7 +37,9 @@ function shuffle(array) {
 let matchCount = 0; 
 
 function mix () {
+  //------------------------------------------------------reset moves to 0-----------------------------------
   document.querySelector('.moves').innerHTML = 0;
+  //------------------------------------------------------get a list of cards and mix them up------------------------
   const listItems = cardBoard.getElementsByTagName('li');
   var arr = Array.prototype.slice.call(listItems);
   let shuffledArr = shuffle(arr);
@@ -47,25 +49,31 @@ function mix () {
       cardBoard.appendChild(shuffledArr[i]);
   }
    
+  //--------------------------------------------------------if starting over in middle of game, erase cards---------------------
   let clearmatch = document.querySelectorAll(".card.match");
    
   for (var i = 0; i < clearmatch.length; i++) {
+    //----------------------------------------------------erase matched cards-------------------------------
     clearmatch[i].classList.toggle("match");
   }
     
   let clearNonMatch = document.querySelectorAll(".card.open.show");
     
   for (var i = 0; i < clearNonMatch.length; i++) {
+    //----------------------------------------------------------erase unmatched cards-------------------------------------
       clearNonMatch[i].classList.toggle("open");
       clearNonMatch[i].classList.toggle("show");
   }
   
+  //------------------------------------------------------------reset timer to 0-------------------------------------
   document.querySelector(".timer").innerHTML = 0;
   
   if (constTimer === false) {
+    //-----------------------------------------------------start timer again if stoped by winning the game-------------------
     constTimer = setInterval(myTimer ,1000);
   }
   
+  //.............................................................reset number of stars----------------------------------
   let starsList = document.querySelector(".stars");
   starsList.innerHTML = '';
   
@@ -74,10 +82,11 @@ function mix () {
     li.innerHTML = '<i class="fa fa-star"></i>';
     starsList.appendChild(li);
   }
-  
+  //-----------------------------------------------------------reset matched count----------------------------------------
   matchCount = 0; 
 }
 
+//-----------------------------------------------------------add event listener to reset button-----------------------------------
 reset.addEventListener('click', mix);
 
 //---------------------------------variables for gathing data of what cards were clicked-------------------------
@@ -119,7 +128,9 @@ function matched (event) {
     let counter = document.querySelector('.moves').innerHTML;
     
     if (counter % 2 !== 0){
+      //---------------------------------------what to do on every click that is even----------------
       if(card1 == card2){
+        //-------------------------------------------if they match then stay open-----------------
         event.target.classList.toggle("open");
         event.target.classList.toggle("show");
         event.target.classList.toggle("match");
@@ -129,45 +140,28 @@ function matched (event) {
         matchCount += 1;
         
         if (matchCount === 8) {
+          //------------------------------------------what to do when all cards are matched-----------------------
           let time = document.querySelector(".timer").innerHTML;
           
+          //-------------------when "you win" pops up, Display the time, and number of stars,-------------------------
           if (counter >= 57) {
               alert("Hmm, were you even trying? You only kept 1 star and your time was " + time + " seconds!");
-              document.querySelector(".timer").innerHTML = 0;
-              matchCount = 0;
-              clearInterval(constTimer);
-              constTimer = false;
-          
           } else if (counter >= 47) {
               alert("Oh no, you should concentrate better next time. You only kept 2 stars and your time was " + time + " seconds!");
-              document.querySelector(".timer").innerHTML = 0;
-              matchCount = 0;
-              clearInterval(constTimer);
-              constTimer = false;
-          
           } else if (counter >= 37) {
               alert("Not bad, for keeping 3 stars but actively try and remember what you saw. Your time was " + time + " seconds!");
-              document.querySelector(".timer").innerHTML = 0;
-              matchCount = 0;
-              clearInterval(constTimer);
-              constTimer = false;
-          
           } else if (counter >= 27) {
               alert("Almost Perfect Score while keeping 4 stars. Concentrate better next time! Your time was " + time + " seconds!");
-              document.querySelector(".timer").innerHTML = 0;
-              matchCount = 0;
-              clearInterval(constTimer);
-              constTimer = false;
-          
           } else if (counter <= 26) {
               alert("Perfect Score! You kept all 5 stars and your time was " + time + " seconds!");
-              document.querySelector(".timer").innerHTML = 0;
-              matchCount = 0;
-              clearInterval(constTimer);
-              constTimer = false;
           }
+          //-------------------------------------stop the timer, reset matchCount to 0---------------------------------------
+          matchCount = 0;
+          clearInterval(constTimer);
+          constTimer = false;
         }
       } else { 
+        //-------------------------------------------------if they don't match, then close------------------------------------
         setTimeout(function delayWrongAnswer() {
           event.target.classList.toggle("open");
           event.target.classList.toggle("show");
@@ -180,10 +174,13 @@ function matched (event) {
 }
 
 function counter (event) {
+  //------------------count number of moves-----------------------
   if (event.target.classList.contains("fa") || event.target.classList.contains("card")){
     let movesEl = document.querySelector('.moves').innerHTML;
     let movesNum = parseInt(movesEl,10) +1;
     document.querySelector('.moves').innerHTML = movesNum;
+
+    //------------------------decrease stars------------------------
     const starGroup = document.querySelector('.stars');
     
     if (movesNum === 27) {
@@ -200,6 +197,7 @@ function counter (event) {
 
 
 function flip (event) {
+  //-----------------------------------flip cars open----------------------
   if (event.target.classList.contains("fa")){
       event.target.parentElement.classList.toggle("open");
       event.target.parentElement.classList.toggle("show");
@@ -215,7 +213,7 @@ function masterFunction (evt) {
   counter(evt);
   flip(evt);
 }
-
+//-------------------------------------------------------add event listener to the board--------------------------------------
 cardBoard.addEventListener('click', masterFunction);
 
 
