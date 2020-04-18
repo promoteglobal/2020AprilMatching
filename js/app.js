@@ -1,15 +1,7 @@
-/*
- * Create a list that holds all of your cards
- */
+
 const cardBoard = document.querySelector('.deck'); 
 
 const reset = document.querySelector('.restart');
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
- */
 
 
 // Shuffle function from http://stackoverflow.com/a/2450976
@@ -72,18 +64,6 @@ reset.addEventListener('click', mix);
  */
 
 
-
-// cardBoard.addEventListener('click', function (event) {
-//   if (event.target.classList.contains("card")){
-//   console.log('The card was clicked!');
-//   event.target.classList.toggle("open");
-//   event.target.classList.toggle("show");
-// }else if(event.target.classList.contains("fa")){
-//   event.preventDefault();
-//   console.log('The icon was clicked');
-// }
-// });
-
 cardBoard.addEventListener('click', function flip (event) {
   if (event.target.classList.contains("fa")){
   // console.log('The icon was clicked!');
@@ -144,28 +124,28 @@ cardBoard.addEventListener('click', function matched (event) {
     matchCount += 1;
     if (matchCount === 8) {
       debugger;
-      if (counter >= 55) {
-        alert("Hmm, were you even trying?");
+      if (counter >= 57) {
+        alert("Hmm, were you even trying? You only kept 1 star!");
         document.querySelector(".timer").innerHTML = 0;
         matchCount = 0;
       }
-      else if (counter >= 50) {
-        alert("Oh no, you should concentrate better next time.");
+      else if (counter >= 47) {
+        alert("Oh no, you should concentrate better next time. You only kept 2 stars.");
         document.querySelector(".timer").innerHTML = 0;
         matchCount = 0;
       }
-      else if (counter >= 45) {
-        alert("Not bad, but actively try and remember what you saw.");
+      else if (counter >= 37) {
+        alert("Not bad, for keeping 3 stars but actively try and remember what you saw.");
         document.querySelector(".timer").innerHTML = 0;
         matchCount = 0;
       }
-      else if (counter >= 26) {
-        alert("Almost Perfect Score. Concentrate better next time!");
+      else if (counter >= 27) {
+        alert("Almost Perfect Score while keeping 4 stars. Concentrate better next time!");
         document.querySelector(".timer").innerHTML = 0;
         matchCount = 0;
       }
-      else if (counter <= 25) {
-        alert("Perfect Score!");
+      else if (counter <= 26) {
+        alert("Perfect Score! You kept all 5 stars!");
         document.querySelector(".timer").innerHTML = 0;
         matchCount = 0;
       }
@@ -183,23 +163,7 @@ cardBoard.addEventListener('click', function matched (event) {
  
   }
 });
-//try to work in closure to keep the cards value in tact.
-//maybe break up catching this info into 2 functions with closure?
-// cardBoard.addEventListener('click', function matched (event) {
-//   debugger;
-//   let card1;
-//   let card2;
-//   if (event.target.classList.contains("card")){
-//   let counter = document.querySelector('.moves').innerHTML;
-//   if(counter % 2 === 0) {
-//     card2 = event.target;
-//     console.log("card 2 was clicked");
-//   }
-//  else if (!counter % 2 === 0){
-//   card1 = event.target;
-//   console.log("card 1 was clicked");
-//  }
-// }});
+
 
 cardBoard.addEventListener('click', function counter (event) {
   if (event.target.classList.contains("fa") || event.target.classList.contains("card")){
@@ -208,30 +172,36 @@ cardBoard.addEventListener('click', function counter (event) {
   let movesNum = parseInt(movesEl,10) +1;
   document.querySelector('.moves').innerHTML = movesNum;
   const starGroup = document.querySelector('.stars');
-  if (movesNum === 25) {
+  if (movesNum === 27) {
     starGroup.firstElementChild.remove();
   }
-  if (movesNum === 35) {
+  if (movesNum === 37) {
     starGroup.firstElementChild.remove();
   }
-  if (movesNum === 45) {
+  if (movesNum === 47) {
     starGroup.firstElementChild.remove();
   }
-  if (movesNum === 50) {
-    starGroup.firstElementChild.remove();
-  }
-  if (movesNum === 55) {
+  if (movesNum === 57) {
     starGroup.firstElementChild.remove();
   }
 }});
 
 
-setInterval(myTimer ,1000);
+
+//mixes board upon starting
+document.addEventListener("load", mix);
+
+//makes timer continuously go
 function myTimer() {
   let timer = Number(document.querySelector(".timer").innerHTML);
   timer += 1;
   document.querySelector(".timer").innerHTML = timer;
 }
+  
+setInterval(myTimer ,1000);
+
+
+
 
 // const myName = 'Andrew';
 
@@ -246,19 +216,3 @@ function myTimer() {
 // }
 
 // introduceMyself();
-
-
-
-//star function
-//you win function
-//timer function
-
-//-------done---------
-//flip function
-
-//reset function
-  //mix function
-  //counting function
-  //match function
-
-  document.addEventListener("load", mix);
